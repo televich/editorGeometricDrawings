@@ -1,0 +1,317 @@
+/* ================================================================ **
+** style.css
+** ---------------------------------------------------------------- **
+** Created: 05-05-08 (dd-mm-yy)
+** Author: onedollartemplates.com
+** Template: Granite Glass
+** ================================================================ */
+
+
+/* ---------------------------------------------------------------- **
+** Generic
+** ---------------------------------------------------------------- */
+html { font-size: 100%; }
+body {
+    background: #333 url("bg.gif");
+    font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* headers */
+h2, h3, h4, h5, h6 {
+    color: #099;
+    margin: 0;
+    font-weight: normal;
+    font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; letter-spacing: -1px;
+}
+h2 { font-size: 1.8em; margin: 25px 0 15px; }
+h3 { font-size: 1.6em; margin: 25px 0 15px; }
+h4 { font-size: 1.4em; margin: 20px 0 10px; }
+h5 { font-size: 1.2em; margin: 20px 0 5px; }
+h6 { font-size: 1em; margin: 20px 0 0; }
+
+
+blockquote {
+    font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; border: 1px solid #ddd;
+    padding: 0 15px 0 15px;
+    background-color: #eee;
+    min-height: 60px;
+}
+* html blockquote { height: 60px; }
+
+
+/* images */
+img { border: 1px solid #ddd; padding: 1px; background-color: #fff; }
+a img { }
+a:hover img { border-color: #eee; }
+img.right { margin: 0 0 20px 20px; }
+img.left { margin: 0 20px 20px 0; }
+
+
+form p select { width: 57.5%; }
+form ul.fieldlist { margin: -30px 0 10px 33%; padding: 0; list-style-type: none; }
+form ul.fieldlist li { color: #333; padding: 0 30px 5px 0; white-space: nowrap; }
+
+/* horizontal rule */
+hr { border: 0; height: 1px; background-color: #ddd; color: #ddd; margin: 30px 0 0; }
+
+/* classes */
+.left { float: left; }
+.right {float: right; }
+.hide { display: none; }
+
+
+/* buttons */
+.clear-button{
+    display:block;
+    width: 50px;
+    height: 50px;
+    background: url('cl.gif') center no-repeat;
+    margin-bottom: 3px;
+    margin-top: 3px;
+    margin-right: 2px;
+    border: 1px solid #000000;
+    float: left;
+}
+
+.web-button{
+    display:block;
+    width: 50px;
+    height: 50px;
+    background: url('web.gif') center no-repeat;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    border: 1px solid #000000;
+    float: left;
+}
+
+.point-button{
+    display:block;
+    width: 50px;
+    height: 50px;
+    background: url('point.gif') center no-repeat;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    margin-right: 2px;
+    border: 1px solid #000000;
+    float:left;
+}
+
+.line-button{
+    display:table-column;
+    width: 50px;
+    height: 50px;
+    background: url('line.gif') center no-repeat;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 10px;
+    border: 1px solid #000000;
+    float: left;
+}
+
+.segment-button{
+    display:block;
+    width: 50px;
+    height: 50px;
+    background: url('segment.jpg') center no-repeat;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    border: 1px solid #000000;
+    float: left;
+}
+
+.circle-button{
+    display:block;
+    width: 50px;
+    height: 50px;
+    background: url('circle.gif') center no-repeat;
+    margin-bottom: 3px;
+    margin-right: 10px;
+    border: 1px solid #000000;
+    float: left;
+}
+
+.triangle-button{
+    display:block;
+    width: 50px;
+    height: 50px;
+    background: url('triangle.gif') center no-repeat;
+    margin-bottom: 3px;
+    margin-right: 2px;
+    border: 1px solid #000000;
+    float: left;
+}
+
+.angle-button{
+    display:block;
+    width: 50px;
+    height: 50px;
+    background: url('angle.gif') center no-repeat;
+    margin-bottom: 3px;
+    margin-right: 30px;
+    border: 1px solid #000000;
+    float: left;
+}
+
+.quadrangle-button{
+    display:block;
+    width: 50px;
+    height: 50px;
+    background: url('quadrangle.gif') center no-repeat;
+    margin-bottom: 3px;
+    margin-right: 2px;
+    border: 1px solid #000000;
+    float: left;
+}
+
+.polygon-button{
+    display:block;
+    width: 50px;
+    height: 50px;
+    background: url('polygon.gif') center no-repeat;
+    margin-bottom: 3px;
+    border: 1px solid #000000;
+    float: left;
+}
+
+/*------------------------------------------------------------*
+**  Container
+**------------------------------------------------------------*/
+#container {
+    margin: 0 auto;
+    width: 900px;
+}
+
+/*------------------------------------------------------------*
+**  Header
+**------------------------------------------------------------*/
+/*#header { background: url("header_.gif") no-repeat; }*/
+
+/* Logo */
+#header h1 {
+    font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: normal;
+    color: #099;
+    margin: 0;
+    padding: 20px 0;
+    letter-spacing: -1px;
+}
+#header h1 a { text-decoration: none; color: #099; }
+#header h1 a:hover { text-decoration: none; }
+#header h1 span { color: #fff; }
+
+/*------------------------------------------------------------*
+**  Body
+**------------------------------------------------------------*/
+/*#body { padding: 20px; background: #222 url("body_.png") repeat-x; }*/
+
+
+
+
+/*------------------------------------------------------------*
+**  Footer
+**------------------------------------------------------------*/
+#footer {
+    padding: 0 20px;
+    background-color: #222;
+    height: 1%;
+    font-size: 0.9em;
+    color: #ccc;
+    margin-top: -20px;
+}
+#footer:after {
+    content: ".";
+    clear: both;
+    visibility: hidden;
+    display: block;
+    height: 0;
+}
+/*Do not forget to describe the styles for:focus!*/
+:focus {
+    outline:0;
+}
+body {
+    line-height:1;
+}
+ol, ul {
+    list-style:none;
+}
+/*For tables still need to write 'cellspacing="0"' in code*/
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+caption, th, td {
+    text-align:left;
+    font-weight:normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:"";
+}
+blockquote, q {
+    quotes:"" "";
+}
+/*End NULL*/
+
+body {
+    font-family:Tahoma, Verdana, Arial, 'Sans Serif';
+    margin:20px;
+}
+
+.features-table
+{
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-shadow: 0 1px 0 #fff;
+    color: #2a2a2a;
+    background: #fafafa;
+    background-image: -moz-linear-gradient(top, #fff, #eaeaea, #fff); /* Firefox 3.6 */
+    background-image: -webkit-gradient(linear,center bottom,center top,from(#fff),color-stop(0.5, #eaeaea),to(#fff));
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.features-table td
+{
+    height: 50px;
+    padding: 0 20px;
+    border-bottom: 1px solid #cdcdcd;
+    box-shadow: 0 1px 0 white;
+    -moz-box-shadow: 0 1px 0 white;
+    -webkit-box-shadow: 0 1px 0 white;
+    text-align: center;
+    vertical-align: middle;
+
+    display: table-cell;
+}
+
+.features-table tbody td
+{
+    text-align: center;
+    width: 150px;
+}
+
+
+.features-table td.grey
+{
+    background: #efefef;
+    background: rgba(144,144,144,0.15);
+    border-right: 1px solid white;
+}
+
+.features-table td.green
+{
+    background: #e7f3d4;
+    background: rgba(184,243,85,0.3);
+}
+
+

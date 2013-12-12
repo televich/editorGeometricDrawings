@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="lib\jquery-1.5.1.js"  type="text/javascript"></script>
+    <script src ="lib\jsxgraphcore.js" type ="text/javascript"></script>
+    <script src ="lib\jsxgraphsrc.js"  type = "text/javascript"></script>
+    <script src ="js\paintpanel.js"   type = "text/javascript"></script>
+    <script src ="js\controllers\mainController.js" type = "text/javascript"></script>
+    <script src ="js\controllers\lineController.js" type= "text/javascript"></script>
+    <script src = "js\controllers\circleController.js" type="text/javascript"></script>
+    <script src = "js\controllers\segmentController.js" type="text/javascript"></script>
+    <script src = "js\controllers\triangleController.js" type="text/javascript"></script>
+    <script src = "js\controllers\quadrangleController.js" type="text/javascript"></script>
+    <script src = "js\controllers\polygonController.js" type="text/javascript"></script>
+    <script src = "js\controllers\angleController.js" type="text/javascript"></script>
+    <script src = "js\util.js" type = "text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+
+</head>
+<body>
+
+<div id="container">
+    <div id="body">
+    </div>
+
+    <table class="features-table" border="1">
+        <tr>
+            <td style="font-size: 10pt" id="modeInfo" >
+               Выберите режим
+            </td>
+
+            <td>
+                <div id="header">
+                    <h1>ONLINE GEOMETRY</h1>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+
+                <button onclick="app.setPointMode()" class="point-button" ></button>
+
+                <button onclick="app.setLineMode()" class="line-button"></button>
+
+                <button onclick="PaintPanel.clear()" class="clear-button"></button>
+
+                <button onclick="app.setSegmentMode()" class="segment-button"></button>
+
+                <button onclick="app.setCircleMode()" class="circle-button"></button>
+
+                <button onclick="PaintPanel.grid()" class="web-button"></button>
+
+                <button onclick="app.setTriangleMode()" class="triangle-button"></button>
+
+                <button onclick="app.setAngleMode()" class="angle-button"></button>
+
+                <button onclick="app.setQuadrangleMode()" class="quadrangle-button"></button>
+
+                <button onclick="app.setPolygonMode()" class="polygon-button"></button>
+
+            </td>
+            <td rowspan="2">
+
+                <div id="board" class="jxgbox" style="width: 600px; height: 600px; -moz-user-select: none; overflow: hidden; position: relative;">
+                    <svg style="overflow: hidden; width: 700px; height: 500px;"><defs><filter filterUnits="userSpaceOnUse" height="300%" width="300%" id="jxgbox2_f1">
+                        <feOffset dy="5" dx="5" in="SourceAlpha" result="offOut"></feOffset>
+                        <feGaussianBlur stdDeviation="3" in="offOut" result="blurOut"></feGaussianBlur>
+                        <feBlend mode="normal" in2="blurOut" in="SourceGraphic"></feBlend></filter></defs>
+                    </svg>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top">
+
+                <p style="font-size: 10pt"> Информация о графическом объекте </p>
+                <p style="font-size: 10pt" id ="polygonInfo">
+
+                </p>
+                <p style="font-size: 10pt" id = "info">
+
+                </p>
+
+                <p style="font-size: 10pt" id = "containsInfo">
+
+                </p>
+                <p style="font-size: 10pt" id = "containsPointInfo">
+
+                </p>
+
+                <fieldset id = "parameters">
+                    <div align = "left">
+                        <p style="font-size: 10pt"> Введите значение </p>
+                        <input id ="p" type = "text" name="param " size="15">
+                        <button onclick="app.saveChanges()">Сохранить</button>
+                    </div>
+                </fieldset>
+
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+
+    PaintPanel.createBoard();
+    var field = document.getElementById("parameters");
+    field.style.display = 'none';
+
+</script>
+</html>
+
+
