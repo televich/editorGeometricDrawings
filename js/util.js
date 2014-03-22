@@ -1,5 +1,6 @@
 /**
  * Created by Администратор on 09.12.13.
+ * test
  */
  function Point(x, y){
 
