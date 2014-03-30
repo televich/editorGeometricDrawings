@@ -11,8 +11,13 @@
 ** Generic
 ** ---------------------------------------------------------------- */
 html { font-size: 100%; }
+
+
+/* ---------------------------------------------------------------- **
+** Body
+** ---------------------------------------------------------------- */
 body {
-    background: #333 url("bg.gif");
+    background: #333 url("../images/bg.gif");
     font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;
     font-size: 1.1em;
     line-height: 1.5em;
@@ -22,20 +27,31 @@ body {
     padding: 0;
 }
 
-/* headers */
+
+/* ---------------------------------------------------------------- **
+** Headers
+** ---------------------------------------------------------------- */
 h2, h3, h4, h5, h6 {
     color: #099;
     margin: 0;
     font-weight: normal;
     font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; letter-spacing: -1px;
 }
+
 h2 { font-size: 1.8em; margin: 25px 0 15px; }
+
 h3 { font-size: 1.6em; margin: 25px 0 15px; }
+
 h4 { font-size: 1.4em; margin: 20px 0 10px; }
+
 h5 { font-size: 1.2em; margin: 20px 0 5px; }
+
 h6 { font-size: 1em; margin: 20px 0 0; }
 
 
+/* ---------------------------------------------------------------- **
+** BlockQuote
+** ---------------------------------------------------------------- */
 blockquote {
     font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; border: 1px solid #ddd;
     padding: 0 15px 0 15px;
@@ -45,154 +61,64 @@ blockquote {
 * html blockquote { height: 60px; }
 
 
-/* images */
+/* ---------------------------------------------------------------- **
+** Images
+** ---------------------------------------------------------------- */
 img { border: 1px solid #ddd; padding: 1px; background-color: #fff; }
 a img { }
 a:hover img { border-color: #eee; }
 img.right { margin: 0 0 20px 20px; }
 img.left { margin: 0 20px 20px 0; }
 
-
 form p select { width: 57.5%; }
 form ul.fieldlist { margin: -30px 0 10px 33%; padding: 0; list-style-type: none; }
 form ul.fieldlist li { color: #333; padding: 0 30px 5px 0; white-space: nowrap; }
 
-/* horizontal rule */
+
+/* ---------------------------------------------------------------- **
+** Horizontal Rule
+** ---------------------------------------------------------------- */
 hr { border: 0; height: 1px; background-color: #ddd; color: #ddd; margin: 30px 0 0; }
 
-/* classes */
+
+/* ---------------------------------------------------------------- **
+** Classes
+** ---------------------------------------------------------------- */
 .left { float: left; }
 .right {float: right; }
 .hide { display: none; }
 
 
-/* buttons */
-.clear-button{
-    display:block;
+/* ---------------------------------------------------------------- **
+** Buttons
+** ---------------------------------------------------------------- */
+.button{
     width: 50px;
     height: 50px;
-    background: url('cl.gif') center no-repeat;
     margin-bottom: 3px;
     margin-top: 3px;
-    margin-right: 2px;
-    border: 1px solid #000000;
-    float: left;
+    margin-right: 1px;
 }
 
-.web-button{
-    display:block;
-    width: 50px;
-    height: 50px;
-    background: url('web.gif') center no-repeat;
-    margin-bottom: 2px;
-    margin-top: 2px;
-    border: 1px solid #000000;
-    float: left;
-}
 
-.point-button{
-    display:block;
-    width: 50px;
-    height: 50px;
-    background: url('point.gif') center no-repeat;
-    margin-bottom: 2px;
-    margin-top: 2px;
-    margin-right: 2px;
-    border: 1px solid #000000;
-    float:left;
-}
-
-.line-button{
-    display:table-column;
-    width: 50px;
-    height: 50px;
-    background: url('line.gif') center no-repeat;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    margin-right: 10px;
-    border: 1px solid #000000;
-    float: left;
-}
-
-.segment-button{
-    display:block;
-    width: 50px;
-    height: 50px;
-    background: url('segment.jpg') center no-repeat;
-    margin-bottom: 2px;
-    margin-right: 2px;
-    border: 1px solid #000000;
-    float: left;
-}
-
-.circle-button{
-    display:block;
-    width: 50px;
-    height: 50px;
-    background: url('circle.gif') center no-repeat;
-    margin-bottom: 3px;
-    margin-right: 10px;
-    border: 1px solid #000000;
-    float: left;
-}
-
-.triangle-button{
-    display:block;
-    width: 50px;
-    height: 50px;
-    background: url('triangle.gif') center no-repeat;
-    margin-bottom: 3px;
-    margin-right: 2px;
-    border: 1px solid #000000;
-    float: left;
-}
-
-.angle-button{
-    display:block;
-    width: 50px;
-    height: 50px;
-    background: url('angle.gif') center no-repeat;
-    margin-bottom: 3px;
-    margin-right: 30px;
-    border: 1px solid #000000;
-    float: left;
-}
-
-.quadrangle-button{
-    display:block;
-    width: 50px;
-    height: 50px;
-    background: url('quadrangle.gif') center no-repeat;
-    margin-bottom: 3px;
-    margin-right: 2px;
-    border: 1px solid #000000;
-    float: left;
-}
-
-.polygon-button{
-    display:block;
-    width: 50px;
-    height: 50px;
-    background: url('polygon.gif') center no-repeat;
-    margin-bottom: 3px;
-    border: 1px solid #000000;
-    float: left;
-}
-
-/*------------------------------------------------------------*
-**  Container
-**------------------------------------------------------------*/
+/* ---------------------------------------------------------------- **
+** Container
+** ---------------------------------------------------------------- */
 #container {
     margin: 0 auto;
     width: 900px;
 }
 
-/*------------------------------------------------------------*
-**  Header
-**------------------------------------------------------------*/
-/*#header { background: url("header_.gif") no-repeat; }*/
 
-/* Logo */
+/* ---------------------------------------------------------------- **
+** Header
+** ---------------------------------------------------------------- */
+#header { background: url("../images/header_.gif") no-repeat; }
+
+
+/* ---------------------------------------------------------------- **
+** Logo
+** ---------------------------------------------------------------- */
 #header h1 {
     font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;
     font-size: 1.5em;
@@ -206,17 +132,16 @@ hr { border: 0; height: 1px; background-color: #ddd; color: #ddd; margin: 30px 0
 #header h1 a:hover { text-decoration: none; }
 #header h1 span { color: #fff; }
 
-/*------------------------------------------------------------*
-**  Body
-**------------------------------------------------------------*/
-/*#body { padding: 20px; background: #222 url("body_.png") repeat-x; }*/
+
+/* ---------------------------------------------------------------- **
+** Body
+** ---------------------------------------------------------------- */
+/*#body { padding: 20px; background: #222 url("../images/body_.png") repeat-x; }*/
 
 
-
-
-/*------------------------------------------------------------*
-**  Footer
-**------------------------------------------------------------*/
+/* ---------------------------------------------------------------- **
+** Footer
+** ---------------------------------------------------------------- */
 #footer {
     padding: 0 20px;
     background-color: #222;
@@ -232,7 +157,11 @@ hr { border: 0; height: 1px; background-color: #ddd; color: #ddd; margin: 30px 0
     display: block;
     height: 0;
 }
-/*Do not forget to describe the styles for:focus!*/
+
+
+/* ---------------------------------------------------------------- **
+** Do not forget to describe the styles for:focus!
+** ---------------------------------------------------------------- */
 :focus {
     outline:0;
 }
@@ -242,7 +171,11 @@ body {
 ol, ul {
     list-style:none;
 }
-/*For tables still need to write 'cellspacing="0"' in code*/
+
+
+/* ---------------------------------------------------------------- **
+** Do not forget to describe the styles for:focus!
+** ---------------------------------------------------------------- */
 table {
     border-collapse:collapse;
     border-spacing:0;
@@ -258,8 +191,11 @@ q:before, q:after {
 blockquote, q {
     quotes:"" "";
 }
-/*End NULL*/
 
+
+/* ---------------------------------------------------------------- **
+** End NULL
+** ---------------------------------------------------------------- */
 body {
     font-family:Tahoma, Verdana, Arial, 'Sans Serif';
     margin:20px;
