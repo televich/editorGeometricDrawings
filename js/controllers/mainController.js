@@ -35,12 +35,6 @@ var app = {
         this.controller = TriangleCtrl;
         document.getElementById("modeInfo").innerHTML = "Рисование треугольников";
     },
-    setQuadrangleMode : function() {
-
-        this.clearCtrlPoints();
-        this.controller = QuadrangleCtrl;
-        document.getElementById("modeInfo").innerHTML = "Рисование четерехугольников";
-    },
 
     setPolygonMode : function() {
 

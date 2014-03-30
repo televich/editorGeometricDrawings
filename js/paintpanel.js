@@ -194,13 +194,6 @@ var PaintPanel = {
         this.polygons.push(new AbstractPolygon(triangle, side));
 
     },
-    createQuadrangle : function(points) {
-
-        var quadrangle = this.board.create('polygon', points);
-        var sideOfTheQuadrangle = quadrangle.borders;
-        var side = this.createSideOfThePolygon(sideOfTheQuadrangle);
-        this.polygons.push(new AbstractPolygon(quadrangle, side));
-    },
 
     createPolygon : function(points) {
 
