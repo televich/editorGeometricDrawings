@@ -8,6 +8,8 @@ var app = {
     drawer : null,
     parametersDoc : null,
     changeElement : null,
+    history : [],
+    index : 0,
 
     setLineMode : function() {
 
@@ -54,7 +56,7 @@ var app = {
     setPointMode : function() {
 
         this.clearCtrlPoints();
-        this.controller = null;
+        this.controller = PointCtrl;
         document.getElementById("modeInfo").innerHTML = "Рисование точек";
     },
 
@@ -82,6 +84,31 @@ var app = {
         if(this.controller != null) {
             this.controller.clearPoints();
         }
+    },
+
+    executeCommand : function(command) {
+
+        command.execute();
+        if(this.index < this.history.length) {
+            this.history.length = this.index;
+        }
+        this.history.push(command);
+        this.index++;
+    },
+
+    undo : function() {
+
+        if(this.index > -1) {
+            this.history[--this.index].unExecute();
+        } else {
+            this.controller.clearPoints();
+        }
+    },
+
+    redo : function() {
+        if(this.index < this.history.length) {
+            this.history[this.index++].execute();
+        }
     }
 
 }
@@ -89,23 +116,21 @@ var app = {
 document.addEventListener("DOMContentLoaded", function () {
 
     var board = document.getElementById("board");
-
+    app.setPointMode();
     board.addEventListener("mousedown", function (event) {
 
         var LEFT_MOUSE_BUTTON = 1;
         var RIGHT_MOUSE_BUTTON = 3;
         app.closeField();
 
+
         switch (event.which) {
 
             case LEFT_MOUSE_BUTTON:
 
-                var point = PaintPanel.createPoint(event);
-                if(point != null) {
-                    app.controller.addPoint(point);
-                }
-                break;
+                app.controller.addPoint(event);
         }
+
 
         if(event.ctrlKey && event.which == RIGHT_MOUSE_BUTTON) {
 
@@ -116,6 +141,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("p").focus();
             }
         }
+
+
+    });
+   document.addEventListener("keydown", function (event) {
+
+       var keyZ = 90, keyY = 89;
+
+       if(event.ctrlKey && event.keyCode == keyZ) {
+           app.undo();
+       } else if(event.ctrlKey && event.keyCode == keyY){
+           app.redo();
+       }
+
     });
 
 

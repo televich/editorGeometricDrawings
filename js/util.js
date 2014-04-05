@@ -183,4 +183,42 @@ function AbstractPolygon(polygon, sideOfTheAbstractPolygon) {
     }
 
 }
+function AbstractPoint(pointCoordinates) {
 
+    this.pointCoordinates = pointCoordinates;
+    this.exist = true;
+    this.containsOnBoard = false;
+
+    this.getX = function() {
+        return this.pointCoordinates[0];
+    },
+
+    this.getY = function() {
+        return this.pointCoordinates[1];
+    },
+
+    this.setExist = function(exist) {
+      this.exist = exist;
+    },
+
+    this.isExist = function() {
+        return this.exist;
+    },
+
+    this.setConyainsOnBoard = function(containsOnBoard) {
+
+        this.containsOnBoard = containsOnBoard;
+    },
+
+    this.isContainsOnBoard = function() {
+
+        return this.containsOnBoard;
+    },
+
+    this.toString = function() {
+
+        var s = "{" + "AbstractPoint : x = " + this.getX() + ", y = " + this.getY() + "}";
+        return s;
+    }
+
+}

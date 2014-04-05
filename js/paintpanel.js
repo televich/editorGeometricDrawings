@@ -8,8 +8,6 @@ var PaintPanel = {
     points : [],
     board : null,
     showGrid : true,
-    points : [],
-    elemnts : [],
     polygons : [],
 
     createBoard : function() {
@@ -111,24 +109,47 @@ var PaintPanel = {
         return polygon;
     },
 
+    containsPoint : function(event) {
 
-    createPoint : function(event) {
-
-        var point = null;
-        var pointInBoard = this.board.getUsrCoordsOfMouse(event);
+        var contains = false;
         var elements = this.board.getAllUnderMouse(event);
 
-        if(elements.length < 2) {
-            point = this.board.create('point', [pointInBoard[0], pointInBoard[1]]);
+        if(elements.length >= 2) {
+            contains = true;
+        }
+        return contains;
+    },
 
-        } else {
-            var element = elements[0];
-            if(element instanceof  JXG.Point) {
-                point = element;
-                }
-            }
+    getExistingPoint : function(event) {
 
+       var point = null;
+       var elements = this.board.getAllUnderMouse(event);
+       var element = elements[0];
+       if(element instanceof JXG.Point) {
+           point = new AbstractPoint([element.X(), element.Y()]);
+           point.setConyainsOnBoard(true);
+       }
         return point;
+    },
+
+
+    getUsrCoordinatesOfMouse : function(event) {
+
+        var pointInBoard = this.board.getUsrCoordsOfMouse(event);
+        var result = [pointInBoard[0], pointInBoard[1]];
+        return result;
+    },
+
+    createPoint : function(point) {
+
+        var p = this.board.create('point', [point.getX(), point.getY()]);
+        this.points.push(p);
+
+    },
+
+    deleteLastAddedPoint : function() {
+
+        this.board.removeObject(this.points.pop());
     },
 
     getElement : function(event) {
@@ -163,6 +184,18 @@ var PaintPanel = {
         return param;
     },
 
+    getPoint : function(abstractPoint) {
+
+        var point = null;
+        for(var i = 0, length = this.points.length; i < length; i++) {
+            point = this.points[i];
+            if(point.X() == abstractPoint.getX() && point.Y() == abstractPoint.getY()) {
+                return point;
+            }
+        }
+        return null;
+    },
+
     createLine : function(startPoint, endPoint) {
 
         this.board.create('line', [startPoint, endPoint]);
@@ -177,13 +210,17 @@ var PaintPanel = {
         this.elements.push(abstractCircle);
     },
 
-    createSegment : function(startPoint, endPoint) {
+    createSegment : function(abstractStartPoint, abstractEndPoint) {
 
+
+        var startPoint = this.getPoint(abstractStartPoint);
+        var endPoint = this.getPoint(abstractEndPoint);
         var line = this.board.create('line', [startPoint, endPoint],{straightFirst:false, straightLast:false});
         var param = this.getParam(startPoint, endPoint);
         param = (param == null) ?  Math.round(line.L())  : param;
         var abstractLine = new AbstractLine(line, param);
         this.elements.push(abstractLine);
+        return abstractLine;
     },
 
     createTriangle : function(point1, point2, point3) {
@@ -234,9 +271,16 @@ var PaintPanel = {
         return sideOfTheAbstractPolygon;
     },
 
-    removeElement : function(element) {
+    removePoint : function(point) {
 
-      this.board.removeObject(element);
+        this.deleteLastAddedPoint();
+    },
+
+    removeElement : function(abstractElement) {
+
+      this.board.removeObject(abstractElement.getObject());
+      this.removeAbstractElement(abstractElement);
+
     },
 
     searchElement : function(element) {
@@ -297,6 +341,11 @@ var PaintPanel = {
             this.showGrid = true;
         }
 
+    },
+
+    removeAbstractElement : function(element) {
+
+        this.elements.splice(this.elements.indexOf(element), 1);
     }
 }
 
