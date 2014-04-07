@@ -109,6 +109,14 @@ var app = {
         if(this.index < this.history.length) {
             this.history[this.index++].execute();
         }
+    },
+
+    clearBoard : function(){
+        if (this.history.length > 0){
+            var clearCommand = new ClearCommand();
+            clearCommand.addCommands(this.history);
+            app.executeCommand(clearCommand);
+        }
     }
 
 }
