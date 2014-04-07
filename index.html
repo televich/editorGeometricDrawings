@@ -21,7 +21,6 @@
     <script src = "js\commands\addCommands\addTriangleCommand.js" type="text/javascript"></script>
     <script src = "js\commands\addCommands\addAngleCommand.js" type="text/javascript"></script>
     <script src = "js\commands\addCommands\MacroCommand.js" type="text/javascript"></script>
-    <script src = "js\commands\clearCommand.js" type="text/javascript"></script>
     <script src = "js\controllers\pointController.js" type="text/javascript"></script>
     <script src = "js\util.js" type = "text/javascript"></script>
     <script src ="js\paintPanel.js"   type = "text/javascript"></script>
@@ -93,7 +92,7 @@
                             <span class="button" id="polygon-button" onclick="app.setPolygonMode()">
                                 <img src="images/polygon.gif">
                             </span>
-                            <span class="button" id="clear-button" onclick="app.clearBoard()">
+                            <span class="button" id="clear-button" onclick="PaintPanel.clear()">
                                 <img src="images/cl.gif">
                             </span>
                             <span class="button" id="web-button" onclick="PaintPanel.grid()">
