@@ -20,7 +20,7 @@ var app = {
 
     setCircleMode : function() {
         this.clearCtrlPoints();
-        this.controller = CicrleCtrl;
+        this.controller = CircleCtrl;
         document.getElementById("modeInfo").innerHTML = "Рисование окружностей";
     },
 
@@ -127,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
         switch (event.which) {
 
             case LEFT_MOUSE_BUTTON:
-
                 app.controller.addPoint(event);
         }
 

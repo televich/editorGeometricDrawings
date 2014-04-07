@@ -130,13 +130,13 @@ function AbstractAngle(angle, value) {
 }
 function AbstractPolygon(polygon, sideOfTheAbstractPolygon) {
 
-    this.poygon = polygon;
+    this.polygon = polygon;
     this.sideOfTheAbstractPolygon = sideOfTheAbstractPolygon;
 
     this.containsSide = function(side) {
 
         var contains = false;
-        var sideOfThePolygon = this.poygon.borders;
+        var sideOfThePolygon = this.polygon.borders;
         for(var i = 0; i < sideOfThePolygon.length; i++) {
 
             if(((side.point1 == sideOfThePolygon[i].point1 && side.point2 == sideOfThePolygon[i].point2)
@@ -146,6 +146,10 @@ function AbstractPolygon(polygon, sideOfTheAbstractPolygon) {
             }
         }
         return contains;
+    },
+
+    this.getObject = function() {
+        return this.polygon;
     }
 
     this.getPerimeter = function() {
@@ -169,7 +173,7 @@ function AbstractPolygon(polygon, sideOfTheAbstractPolygon) {
         var name = " ";
         for(var i = 0; i < this.sideOfTheAbstractPolygon.length; i++) {
 
-            var points = this.poygon.vertices;
+            var points = this.polygon.vertices;
             for(var i = 0, j = 0; i < points.length - 1; i++, j++){
                 if(j++ > 9) {
                    name += "\n";
@@ -205,7 +209,7 @@ function AbstractPoint(pointCoordinates) {
         return this.exist;
     },
 
-    this.setConyainsOnBoard = function(containsOnBoard) {
+    this.setContainsOnBoard = function(containsOnBoard) {
 
         this.containsOnBoard = containsOnBoard;
     },

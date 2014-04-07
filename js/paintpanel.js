@@ -127,7 +127,7 @@ var PaintPanel = {
        var element = elements[0];
        if(element instanceof JXG.Point) {
            point = new AbstractPoint([element.X(), element.Y()]);
-           point.setConyainsOnBoard(true);
+           point.setContainsOnBoard(true);
        }
         return point;
     },
@@ -196,22 +196,28 @@ var PaintPanel = {
         return null;
     },
 
-    createLine : function(startPoint, endPoint) {
+    createLine : function(abstractStartPoint, abstractEndPoint) {
 
-        this.board.create('line', [startPoint, endPoint]);
+        var startPoint = this.getPoint(abstractStartPoint);
+        var endPoint = this.getPoint(abstractEndPoint)
+        var line = this.board.create('line', [startPoint, endPoint]);
+        var abstractLine = new AbstractLine(line, 0);
+        return abstractLine;
     },
 
-    createCircle : function(startPoint, endPoint) {
+    createCircle : function(abstractStartPoint, abstractEndPoint) {
 
+        var startPoint = this.getPoint(abstractStartPoint);
+        var endPoint = this.getPoint(abstractEndPoint)
         var circle = this.board.create('circle', [startPoint, endPoint]);
         var param = this.getParam(startPoint, endPoint);
         param = (param == null) ?   Math.round(circle.getRadius()) : param;
         var abstractCircle = new AbstractCircle(circle,param);
         this.elements.push(abstractCircle);
+        return abstractCircle;
     },
 
     createSegment : function(abstractStartPoint, abstractEndPoint) {
-
 
         var startPoint = this.getPoint(abstractStartPoint);
         var endPoint = this.getPoint(abstractEndPoint);
@@ -223,13 +229,16 @@ var PaintPanel = {
         return abstractLine;
     },
 
-    createTriangle : function(point1, point2, point3) {
+    createTriangle : function(abstractPoint1, abstractPoint2, abstractPoint3) {
 
+        var point1 = this.getPoint(abstractPoint1), point2 = this.getPoint(abstractPoint2),
+            point3 =this.getPoint(abstractPoint3);
         var triangle = this.board.create('polygon', [point1, point2, point3]);
         var sideOfTheTriangle = triangle.borders;
         var side = this.createSideOfThePolygon(sideOfTheTriangle);
-        this.polygons.push(new AbstractPolygon(triangle, side));
-
+        var abstractTriangle = new AbstractPolygon(triangle, side);
+        this.polygons.push(abstractTriangle);
+        return abstractTriangle
     },
 
     createPolygon : function(points) {
@@ -241,13 +250,14 @@ var PaintPanel = {
 
     },
 
-    createAngle : function(point1, point2, point3) {
+    createAngle : function(abstractPoint1, abstractPoint2, abstractPoint3) {
 
+        var point1 = this.getPoint(abstractPoint1), point2 = this.getPoint(abstractPoint2),
+            point3 =this.getPoint(abstractPoint3);
         var angle = this.board.create('angle', [point1, point2, point3], {type:'sector', orthoType:'square', orthoSensitivity:2, radius: 5});
-        this.elements.push(new AbstractAngle(angle, 30));
-        this.createSegment(point1, point2);
-        this.createSegment(point2, point3);
-
+        var abstractAngle = new AbstractAngle(angle, 30);
+        this.elements.push(abstractAngle);
+        return abstractAngle;
     },
 
     createPolygonSide : function(startPoint, endPoint) {
@@ -281,6 +291,12 @@ var PaintPanel = {
       this.board.removeObject(abstractElement.getObject());
       this.removeAbstractElement(abstractElement);
 
+    },
+
+    removePolygon : function(abstractPolygon) {
+
+        this.board.removeObject(abstractPolygon.getObject());
+        this.polygons.splice(this.polygons.indexOf(abstractPolygon), 1);
     },
 
     searchElement : function(element) {
