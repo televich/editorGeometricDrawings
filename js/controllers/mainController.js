@@ -109,6 +109,13 @@ var app = {
         if(this.index < this.history.length) {
             this.history[this.index++].execute();
         }
+    },
+
+    clearHistory : function() {
+        if (this.history.length != 0){
+            this.history.length = 0;
+            this.index = 0;
+        }
     }
 }
 

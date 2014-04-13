@@ -343,6 +343,7 @@ var PaintPanel = {
         this.board = JXG.JSXGraph.initBoard('board', {boundingbox: [-20, 20, 20, -20], showCopyright : false, grid : this.showGrid,
             zoomX : zoomX, zoomY : zoomY });
         app.controller.clearPoints();
+        app.clearHistory();
         this.elements.length = 0;
     },
 
