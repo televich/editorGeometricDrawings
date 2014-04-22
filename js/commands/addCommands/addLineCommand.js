@@ -6,19 +6,17 @@ function AddLineCommand(startPoint, endPoint) {
     this.startPoint = startPoint;
     this.endPoint = endPoint;
     this.abstractLine = null;
-
-    this.execute = function() {
-
-        this.abstractLine = PaintPanel.createLine(this.startPoint, this.endPoint);
-        LineCtrl.clearPoints();
-    },
-
-    this.unExecute = function() {
-
-        PaintPanel.removeElement(this.abstractLine);
-        if(this.startPoint.isExist() && !this.startPoint.isContainsOnBoard()) {
-            LineCtrl.addStartPoint(this.startPoint);
-        }
-    }
-
 }
+
+AddLineCommand.prototype.execute = function() {
+    this.abstractLine = PaintPanel.createLine(this.startPoint, this.endPoint);
+    LineCtrl.clearPoints();
+};
+
+AddLineCommand.prototype.unExecute = function() {
+
+    PaintPanel.removeElement(this.abstractLine);
+    if(this.startPoint.isExist() && !this.startPoint.isContainsOnBoard()) {
+        LineCtrl.addStartPoint(this.startPoint);
+    }
+};

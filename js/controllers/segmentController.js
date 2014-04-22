@@ -8,7 +8,7 @@ var SegmentCtrl = {
 
     addPoint: function (event) {
 
-        var point = null, macroCommand = false;
+        var point = null;
         var contains = PaintPanel.containsPoint(event);
         var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
 
@@ -17,8 +17,7 @@ var SegmentCtrl = {
             var macroCommand = new MacroCommand();
             var addPointCommand = new AddPointCommand(point);
             var addSegmentCommand = new AddSegmentCommand(this.points[this.points.length - 1], point);
-            macroCommand.addCommand(addPointCommand);
-            macroCommand.addCommand(addSegmentCommand);
+            macroCommand.addCommands(addPointCommand, addSegmentCommand);
             app.executeCommand(macroCommand);
             this.clearPoints();
         } else {

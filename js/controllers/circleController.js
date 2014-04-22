@@ -17,8 +17,7 @@ var CircleCtrl = {
             var macroCommand = new MacroCommand();
             var addPointCommand = new AddPointCommand(point);
             var addCircleCommand = new AddCircleCommand(this.points[this.points.length - 1], point);
-            macroCommand.addCommand(addPointCommand);
-            macroCommand.addCommand(addCircleCommand);
+            macroCommand.addCommands(addPointCommand, addCircleCommand);
             app.executeCommand(macroCommand);
             this.clearPoints();
         } else {

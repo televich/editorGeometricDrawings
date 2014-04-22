@@ -241,12 +241,18 @@ var PaintPanel = {
         return abstractTriangle
     },
 
-    createPolygon : function(points) {
+    createPolygon : function(abstractPoints) {
 
+        var points = [];
+        for(var  i = 0, length = abstractPoints.length; i < length; i++) {
+            points.push(this.getPoint(abstractPoints[i]));
+        }
         var polygon = this.board.create('polygon', points);
         var sideOfThePolygon = polygon.borders;
         var side = this.createSideOfThePolygon(sideOfThePolygon);
-        this.polygons.push(new AbstractPolygon(polygon, side));
+        var abstractPolygon = new AbstractPolygon(polygon, side);
+        this.polygons.push(abstractPolygon);
+        return abstractPolygon;
 
     },
 

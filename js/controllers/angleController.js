@@ -34,9 +34,7 @@ var AngleCtrl = {
             var addSegmentCommand1 = new AddSegmentCommand(existingPoints[length - 3], existingPoints[length - 2]);
             var addSegmentCommand2 = new AddSegmentCommand(existingPoints[length - 2], existingPoints[length - 1]);
             var addAngleCommand = new AddAngleCommand(existingPoints[length - 3], existingPoints[length - 2], existingPoints[length - 1]);
-            macroCommand.addCommand(addSegmentCommand1);
-            macroCommand.addCommand(addSegmentCommand2);
-            macroCommand.addCommand(addAngleCommand);
+            macroCommand.addCommands(addSegmentCommand1, addSegmentCommand2, addAngleCommand);
             app.executeCommand(macroCommand);
             this.clearPoints();
         }
@@ -52,10 +50,7 @@ var AngleCtrl = {
         var addSegmentCommand1 = new AddSegmentCommand(existingPoints[length - 2], existingPoints[length - 1]);
         var addSegmentCommand2 = new AddSegmentCommand(existingPoints[length - 1], point);
         var addAngleCommand = new AddAngleCommand(existingPoints[length - 2], existingPoints[length - 1], point);
-        macroCommand.addCommand(addPointCommand);
-        macroCommand.addCommand(addSegmentCommand1);
-        macroCommand.addCommand(addSegmentCommand2);
-        macroCommand.addCommand(addAngleCommand);
+        macroCommand.addCommands(addPointCommand, addSegmentCommand1, addSegmentCommand2, addAngleCommand);
         app.executeCommand(macroCommand);
         this.clearPoints();
     },
