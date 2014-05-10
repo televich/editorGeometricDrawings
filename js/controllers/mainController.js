@@ -152,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
    document.addEventListener("keydown", function (event) {
 
        var keyZ = 90, keyY = 89;
+       var keyC = 67, keyG = 71;
 
        if(event.ctrlKey && event.keyCode == keyZ) {
            app.undo();
@@ -159,8 +160,13 @@ document.addEventListener("DOMContentLoaded", function () {
            app.redo();
        }
 
-    });
+       if(event.shiftKey && event.keyCode == keyC) {
+           PaintPanel.clear();
+       } else if(event.shiftKey && event.keyCode == keyG){
+           PaintPanel.grid();
+       }
 
+   });
 
     board.addEventListener("mousemove", function (event) {
 
