@@ -9,6 +9,7 @@
     <script src ="js\controllers\mainController.js" type = "text/javascript"></script>
     <script src ="js\controllers\lineController.js" type= "text/javascript"></script>
     <script src = "js\controllers\circleController.js" type="text/javascript"></script>
+    <script src = "js\controllers\semicircleController.js" type="text/javascript"></script>
     <script src = "js\controllers\segmentController.js" type="text/javascript"></script>
     <script src = "js\controllers\triangleController.js" type="text/javascript"></script>
     <script src = "js\controllers\quadrangleController.js" type="text/javascript"></script>
@@ -19,6 +20,7 @@
     <script src = "js\commands\addCommands\addPointCommand.js" type="text/javascript"></script>
     <script src = "js\commands\addCommands\addSegmentCommand.js" type="text/javascript"></script>
     <script src = "js\commands\addCommands\addCircleCommand.js" type="text/javascript"></script>
+    <script src = "js\commands\addCommands\addSemiCircleCommand.js" type="text/javascript"></script>
     <script src = "js\commands\addCommands\addLineCommand.js" type="text/javascript"></script>
     <script src = "js\commands\addCommands\addTriangleCommand.js" type="text/javascript"></script>
     <script src = "js\commands\addCommands\addPolygonCommand.js" type="text/javascript"></script>
@@ -96,6 +98,9 @@
                             </span>
                             <span class="button" id="circle-button" onclick="app.setCircleMode()">
                                 <img src="images/circle.gif">
+                            </span>
+                            <span class="button" id="semicircle-button" onclick="app.setSemiCircleMode()">
+                                <img src="images/semicircle.gif">
                             </span>
                             <span class="button" id="sector-button" onclick="app.setSectorMode()">
                                 <img src="images/sector.png">

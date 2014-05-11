@@ -50,6 +50,30 @@ AbstractLine.prototype.getName = function() {
     return this.length.point1.name + this.length.point2.name;
 };
 
+function AbstractSemiCircle(semicircle, radius) {
+
+    this.semicircle = semicircle;
+    this.radius = radius;
+}
+AbstractSemiCircle.prototype.getParam = function() {
+    return this.radius;
+};
+AbstractSemiCircle.prototype.getObject = function() {
+    return this.semicircle;
+};
+AbstractSemiCircle.prototype.getInfo = function() {
+    return "Радиус полуокружности = " + this.radius;
+};
+AbstractSemiCircle.prototype.setParam = function(param) {
+    this.radius = param;
+};
+AbstractSemiCircle.prototype.getPoint1 = function() {
+    return this.semicircle.center;
+};
+AbstractSemiCircle.prototype.getPoint2 = function() {
+    return this.semicircle.point2;
+};
+
 function AbstractSector(sector, value) {
 
     this.sector = sector;

@@ -24,6 +24,12 @@ var app = {
         document.getElementById("modeInfo").innerHTML = "Рисование окружностей";
     },
 
+    setSemiCircleMode : function() {
+        this.clearCtrlPoints();
+        this.controller = SemiCircleCtrl;
+        document.getElementById("modeInfo").innerHTML = "Рисование полуокружностей";
+    },
+
     setSectorMode : function() {
 
         this.clearCtrlPoints();

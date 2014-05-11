@@ -213,9 +213,13 @@ var PaintPanel = {
 
     createCircle : function(abstractStartPoint, abstractEndPoint) {
 
+        var i, h, s, v;
+        h = Math.random()*360;
+        s = Math.random();
+        v = 1.0;
         var startPoint = this.getPoint(abstractStartPoint);
         var endPoint = this.getPoint(abstractEndPoint)
-        var circle = this.board.create('circle', [startPoint, endPoint]);
+        var circle = this.board.create('circle', [startPoint, endPoint],{fillColor:JXG.hsv2rgb((h+180)%360,s,v),fillOpacity:0.2});
         var param = this.getParam(startPoint, endPoint);
         param = (param == null) ?   Math.round(circle.getRadius()) : param;
         var abstractCircle = new AbstractCircle(circle,param);
@@ -233,6 +237,18 @@ var PaintPanel = {
         return abstractSector;
     },
 
+    createSemiCircle : function(abstractStartPoint, abstractEndPoint) {
+
+        var startPoint = this.getPoint(abstractStartPoint);
+        var endPoint = this.getPoint(abstractEndPoint)
+        var semicircle = this.board.create('semicircle', [startPoint, endPoint]);
+        var param = this.getParam(startPoint, endPoint);
+        param = (param == null) ?   Math.round(semicircle.getRadius()) : param;
+        var abstractSemiCircle = new AbstractSemiCircle(semicircle,param);
+        this.elements.push(abstractSemiCircle);
+        return abstractSemiCircle;
+    },
+
     createSegment : function(abstractStartPoint, abstractEndPoint) {
 
         var startPoint = this.getPoint(abstractStartPoint);
@@ -247,9 +263,13 @@ var PaintPanel = {
 
     createTriangle : function(abstractPoint1, abstractPoint2, abstractPoint3) {
 
+        var i, h, s, v;
+        h = Math.random()*360;
+        s = Math.random();
+        v = 1.0;
         var point1 = this.getPoint(abstractPoint1), point2 = this.getPoint(abstractPoint2),
             point3 =this.getPoint(abstractPoint3);
-        var triangle = this.board.create('polygon', [point1, point2, point3]);
+        var triangle = this.board.create('polygon', [point1, point2, point3],{fillColor:JXG.hsv2rgb((h+180)%360,s,v),fillOpacity:0.2});
         var sideOfTheTriangle = triangle.borders;
         var side = this.createSideOfThePolygon(sideOfTheTriangle);
         var abstractTriangle = new AbstractPolygon(triangle, side);
