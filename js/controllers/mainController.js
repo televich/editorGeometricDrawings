@@ -144,6 +144,29 @@ var app = {
             }
         });
 
+       var keyZ = 90, keyY = 89;
+       var keyC = 67, keyG = 71;
+
+       if(event.ctrlKey && event.keyCode == keyZ) {
+           app.undo();
+       } else if(event.ctrlKey && event.keyCode == keyY){
+           app.redo();
+       }
+
+       if(event.shiftKey && event.keyCode == keyC) {
+           PaintPanel.clear();
+       } else if(event.shiftKey && event.keyCode == keyG){
+           PaintPanel.grid();
+       }
+
+        board.addEventListener("mousemove", function (event) {
+
+            PaintPanel.showElementInfo(event);
+            PaintPanel.showContainsInfo(event);
+
+
+        });
+
         board.addEventListener("mouseup", function (event) {
             var LEFT_MOUSE_BUTTON = 1;
             switch (event.which){
@@ -160,15 +183,4 @@ var app = {
                app.redo();
            }
         });
-
-        board.addEventListener("mousemove", function (event) {
-            /*var LEFT_MOUSE_BUTTON = 1;
-            switch (event.which){
-                case LEFT_MOUSE_BUTTON:
-                    app.controller.movePoint(event);
-            }*/
-            PaintPanel.showElementInfo(event);
-            PaintPanel.showContainsInfo(event);
-        });
-
 });
