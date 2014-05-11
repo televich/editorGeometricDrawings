@@ -50,6 +50,30 @@ AbstractLine.prototype.getName = function() {
     return this.length.point1.name + this.length.point2.name;
 };
 
+function AbstractSector(sector, value) {
+
+    this.sector = sector;
+    this.value = value;
+
+}
+AbstractSector.prototype.getParam = function() {
+    return this.value;
+};
+AbstractSector.prototype.getObject = function() {
+    return this.sector;
+};
+AbstractSector.prototype.getInfo = function() {
+    return "Значение сектора = " + this.value;
+};
+AbstractSector.prototype.setParam = function(param) {
+    this.value = param;
+};
+AbstractSector.prototype.getPoint1 = function() {
+    return null;
+};
+AbstractSector.prototype.getPoint2 = function() {
+    return null;
+};
 
 function AbstractCircle(circle, radius) {
 

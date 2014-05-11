@@ -24,6 +24,13 @@ var app = {
         document.getElementById("modeInfo").innerHTML = "Рисование окружностей";
     },
 
+    setSectorMode : function() {
+
+        this.clearCtrlPoints();
+        this.controller = SectorCtrl;
+        document.getElementById("modeInfo").innerHTML = "Рисование секторов";
+    },
+
     setSegmentMode : function() {
 
         this.clearCtrlPoints();
@@ -144,21 +151,6 @@ var app = {
             }
         });
 
-       var keyZ = 90, keyY = 89;
-       var keyC = 67, keyG = 71;
-
-       if(event.ctrlKey && event.keyCode == keyZ) {
-           app.undo();
-       } else if(event.ctrlKey && event.keyCode == keyY){
-           app.redo();
-       }
-
-       if(event.shiftKey && event.keyCode == keyC) {
-           PaintPanel.clear();
-       } else if(event.shiftKey && event.keyCode == keyG){
-           PaintPanel.grid();
-       }
-
         board.addEventListener("mousemove", function (event) {
 
             PaintPanel.showElementInfo(event);
@@ -176,11 +168,24 @@ var app = {
         });
 
         document.addEventListener("keydown", function (event) {
-           var keyZ = 90, keyY = 89;
-           if(event.ctrlKey && event.keyCode == keyZ) {
-               app.undo();
-           } else if(event.ctrlKey && event.keyCode == keyY){
-               app.redo();
-           }
+            var keyZ = 90, keyY = 89;
+            var keyC = 67, keyG = 71;
+            var keyF1 = 112;
+
+            if(event.ctrlKey && event.keyCode == keyZ) {
+                app.undo();
+            } else if(event.ctrlKey && event.keyCode == keyY){
+                app.redo();
+            }
+
+            if(event.shiftKey && event.keyCode == keyC) {
+                PaintPanel.clear();
+            } else if(event.shiftKey && event.keyCode == keyG){
+                PaintPanel.grid();
+            }
+
+            if(event.keyCode == keyF1){
+                var newWin = window.open('help.html');
+            }
         });
 });

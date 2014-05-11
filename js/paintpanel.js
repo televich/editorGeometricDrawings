@@ -223,6 +223,16 @@ var PaintPanel = {
         return abstractCircle;
     },
 
+    createSector : function(abstractPoint1, abstractPoint2, abstractPoint3) {
+
+        var point1 = this.getPoint(abstractPoint1), point2 = this.getPoint(abstractPoint2),
+            point3 =this.getPoint(abstractPoint3);
+        var sector = this.board.create('sector', [point1, point2, point3]);
+        var abstractSector = new AbstractSector(sector, 30);
+        this.elements.push(abstractSector);
+        return abstractSector;
+    },
+
     createSegment : function(abstractStartPoint, abstractEndPoint) {
 
         var startPoint = this.getPoint(abstractStartPoint);

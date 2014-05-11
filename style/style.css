@@ -183,7 +183,7 @@ blockquote, q {
 
 
 /* ---------------------------------------------------------------- **
-** End NULL
+** Table
 ** ---------------------------------------------------------------- */
 body {
     font-family:Tahoma, Verdana, Arial, 'Sans Serif';
@@ -239,3 +239,21 @@ body {
     background: rgba(184,243,85,0.3);
 }
 
+/*link*/
+
+a {
+    color:#099;
+    text-decoration:none
+}
+a:active {
+    color:#099;
+    text-decoration:none
+}
+a:visited {
+    color:#666666;
+    text-decoration:none
+}
+a:hover {
+    color:#111;
+    text-decoration: underline
+}
