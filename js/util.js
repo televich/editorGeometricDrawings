@@ -2,7 +2,7 @@
  * Created by Администратор on 09.12.13.
  * test
  */
- function Point(x, y){
+function Point(x, y){
 
     this.x = x;
     this.y = y;
@@ -15,6 +15,11 @@ Point.prototype.getY = function() {
 
     return this.y;
 };
+
+/*Point.prototype.setCoordinates = function(coordinates) {
+    this.x = coordinates[0];
+    this.y = coordinates[1];
+}*/
 
 function AbstractLine(line, startLength) {
 
@@ -151,10 +156,14 @@ AbstractPolygon.prototype.getPolygonName = function() {
 
 function AbstractPoint(pointCoordinates) {
 
+    //this.point = point;
     this.pointCoordinates = pointCoordinates;
     this.exist = true;
     this.containsOnBoard = false;
 }
+AbstractPoint.prototype.getCoordinates = function(){
+    return this.pointCoordinates;
+};
 AbstractPoint.prototype.getX = function() {
     return this.pointCoordinates[0];
 };
@@ -166,6 +175,9 @@ AbstractPoint.prototype.setExist = function(exist) {
 };
 AbstractPoint.prototype.isExist = function() {
     return this.exist;
+};
+AbstractPoint.prototype.setCoordinates = function(pointCoordinates) {
+    this.pointCoordinates = pointCoordinates;
 };
 AbstractPoint.prototype.setContainsOnBoard = function(containsOnBoard) {
     this.containsOnBoard = containsOnBoard;

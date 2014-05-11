@@ -60,7 +60,6 @@ var app = {
         document.getElementById("modeInfo").innerHTML = "Рисование точек";
     },
 
-
     setParametersDoc: function (doc) {
         this.parametersDoc = doc;
     },
@@ -119,56 +118,57 @@ var app = {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-    var board = document.getElementById("board");
-    app.setPointMode();
-    board.addEventListener("mousedown", function (event) {
+        var board = document.getElementById("board");
+        app.setPointMode();
 
-        var LEFT_MOUSE_BUTTON = 1;
-        var RIGHT_MOUSE_BUTTON = 3;
-        app.closeField();
+        board.addEventListener("mousedown", function (event) {
+            var LEFT_MOUSE_BUTTON = 1;
+            var RIGHT_MOUSE_BUTTON = 3;
+            app.closeField();
 
-
-        switch (event.which) {
-
-            case LEFT_MOUSE_BUTTON:
-                app.controller.addPoint(event);
-        }
-
-
-        if(event.ctrlKey && event.which == RIGHT_MOUSE_BUTTON) {
-
-            app.changeElement = PaintPanel.getElement(event);
-            if(app.changeElement != null) {
-                var field = document.getElementById("parameters");
-                field.style.display = 'block';
-                document.getElementById("p").focus();
+            switch (event.which) {
+                case LEFT_MOUSE_BUTTON:
+                    app.controller.addPoint(event);
             }
-        }
 
+            if(event.ctrlKey && event.which == RIGHT_MOUSE_BUTTON) {
 
-    });
-   document.addEventListener("keydown", function (event) {
+                app.changeElement = PaintPanel.getElement(event);
+                if(app.changeElement != null) {
+                    var field = document.getElementById("parameters");
+                    field.style.display = 'block';
+                    document.getElementById("p").focus();
+                }
+            }
+        });
 
-       var keyZ = 90, keyY = 89;
+        board.addEventListener("mouseup", function (event) {
+            var LEFT_MOUSE_BUTTON = 1;
+            switch (event.which){
+                case LEFT_MOUSE_BUTTON:
+                    app.controller.movePoint(event);
+            }
+        });
 
-       if(event.ctrlKey && event.keyCode == keyZ) {
-           app.undo();
-       } else if(event.ctrlKey && event.keyCode == keyY){
-           app.redo();
-       }
+        document.addEventListener("keydown", function (event) {
+           var keyZ = 90, keyY = 89;
+           if(event.ctrlKey && event.keyCode == keyZ) {
+               app.undo();
+           } else if(event.ctrlKey && event.keyCode == keyY){
+               app.redo();
+           }
+        });
 
-    });
-
-
-    board.addEventListener("mousemove", function (event) {
-
-        PaintPanel.showElementInfo(event);
-        PaintPanel.showContainsInfo(event);
-
-
-    });
-
+        board.addEventListener("mousemove", function (event) {
+            /*var LEFT_MOUSE_BUTTON = 1;
+            switch (event.which){
+                case LEFT_MOUSE_BUTTON:
+                    app.controller.movePoint(event);
+            }*/
+            PaintPanel.showElementInfo(event);
+            PaintPanel.showContainsInfo(event);
+        });
 
 });

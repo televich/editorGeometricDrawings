@@ -142,9 +142,14 @@ var PaintPanel = {
 
     createPoint : function(point) {
 
-        var p = this.board.create('point', [point.getX(), point.getY()]);
+        var p = this.board.create('point', [point.getX(), point.getY()] /*, {attractors: this.points, attractorDistance:0.5, snatchDistance: 2}*/);
         this.points.push(p);
 
+    },
+
+    createPointWithoutPush : function(point) {
+        var p = this.board.create('point', [point.getX(), point.getY()] /*, {attractors: this.points, attractorDistance:0.5, snatchDistance: 2}*/);
+        return p;
     },
 
     deleteLastAddedPoint : function() {
@@ -202,6 +207,7 @@ var PaintPanel = {
         var endPoint = this.getPoint(abstractEndPoint)
         var line = this.board.create('line', [startPoint, endPoint]);
         var abstractLine = new AbstractLine(line, 0);
+        this.elements.push(abstractLine);
         return abstractLine;
     },
 

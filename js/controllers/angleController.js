@@ -8,6 +8,8 @@ var AngleCtrl = {
 
     addPoint: function (event) {
 
+        this.mouseDownEvent = event;
+
         var point = null;
         var contains = PaintPanel.containsPoint(event);
         var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
@@ -66,7 +68,7 @@ var AngleCtrl = {
 
     validateStartPoint: function () {
 
-        var ready = false, length = this.points.length, number = 0
+        var ready = false, length = this.points.length, number = 0;
         for(var  i = 0; i < length; i++) {
             if(this.points[i].isExist()) {
                 number++;
@@ -86,6 +88,23 @@ var AngleCtrl = {
             }
         }
         return existPoints;
+    },
+
+    movePoint : function(event) {
+        var mouseDownCoordinates = PaintPanel.getUsrCoordinatesOfMouse(this.mouseDownEvent);
+        var mouseUpCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
+        if (mouseDownCoordinates[0] != mouseUpCoordinates[0] && mouseDownCoordinates[1] != mouseUpCoordinates[1]){
+            var currentElementWithCoordinates = PaintPanel.board.getAllUnderMouse(this.mouseUpEvent);
+            var currentElement = currentElementWithCoordinates[0];
+            if (currentElement instanceof JXG.Line){
+                var moveAngleCommand = new MoveAngleCommand(event);
+                app.executeCommand(moveAngleCommand);
+            }
+            else if (currentElement instanceof JXG.Point){
+                var movePointCommand = new MovePointCommand(event);
+                app.executeCommand(movePointCommand);
+            }
+        }
     }
 
-}
+};

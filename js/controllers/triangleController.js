@@ -7,6 +7,8 @@ var TriangleCtrl = {
 
     addPoint: function (event) {
 
+        this.mouseDownEvent = event;
+
         var point = null;
         var contains = PaintPanel.containsPoint(event);
         var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
@@ -79,6 +81,23 @@ var TriangleCtrl = {
             }
         }
         return existPoints;
+    },
+
+    movePoint : function(event) {
+        var mouseDownCoordinates = PaintPanel.getUsrCoordinatesOfMouse(this.mouseDownEvent);
+        var mouseUpCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
+        if (mouseDownCoordinates[0] != mouseUpCoordinates[0] && mouseDownCoordinates[1] != mouseUpCoordinates[1]){
+            var currentElementWithCoordinates = PaintPanel.board.getAllUnderMouse(this.mouseUpEvent);
+            var currentElement = currentElementWithCoordinates[0];
+            if (currentElement instanceof JXG.Line){
+                var moveTriangleCommand = new MoveTriangleCommand(event);
+                app.executeCommand(moveTriangleCommand);
+            }
+            else if (currentElement instanceof JXG.Point){
+                var movePointCommand = new MovePointCommand(event);
+                app.executeCommand(movePointCommand);
+            }
+        }
     }
 
-}
+};
