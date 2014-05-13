@@ -8,38 +8,56 @@ var LineCtrl = {
 
     addPoint: function (event) {
 
-        this.mouseDownEvent = event;
-
         var point = null;
         var contains = PaintPanel.containsPoint(event);
         var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
 
-        if (this.validateStartPoint() && !contains) {
-            point = new AbstractPoint(pointCoordinates);
-            var macroCommand = new MacroCommand();
-            var addPointCommand = new AddPointCommand(point);
-            var addLineCommand = new AddLineCommand(this.points[this.points.length - 1], point);
-            macroCommand.addCommands(addPointCommand, addLineCommand);
-            app.executeCommand(macroCommand);
-            this.clearPoints();
-        } else {
-            if (!contains) {
-                point = new AbstractPoint(pointCoordinates);
-                var addPointCommand = new AddPointCommand(point);
-                app.executeCommand(addPointCommand);
-            } else {
-                point = PaintPanel.getExistingPoint(event);
+        if(!contains)
+        {
+            PointCtrl.addPoint(event);
+
+
+            this.points.push(PaintPanel.points[PaintPanel.points.length-1]);
+
+        }
+        else
+        {
+            var pointsN = PaintPanel.board.getAllObjectsUnderMouse(event);
+            var pointN = pointsN[0];
+            for(var i = 0; i < PaintPanel.points.length; i++) {
+                if(pointN.name == PaintPanel.points[i].name)
+                {
+                    PaintPanel.points[i].free = false;
+                    PaintPanel.points[i].numberOfFigures ++ ;
+                    this.points.push(PaintPanel.points[i]);
+                    break;
+                }
             }
-            if (point != null) {
-                this.points.push(point);
-            }
+
         }
 
         if (this.points.length == 2) {
+
+
             var addLineCommand = new AddLineCommand(this.points[0], this.points[1]);
+
             app.executeCommand(addLineCommand);
-            this.clearPoints();
+
+
+
+            this.points.length=0;
+
+            ;
+            //this.clearPoints();
+
         }
+
+    },
+    delOfLine : function(line){
+
+        var delLineCommand = new DelLineCommand(line);
+        app.executeCommand(delLineCommand);
+
     },
 
     clearPoints: function () {
@@ -49,7 +67,7 @@ var LineCtrl = {
 
     addStartPoint: function (point) {
 
-        //alert("len = " + this.points.length)
+
         if (this.points.length < 1) {
             this.points.push(point);
         } else {
@@ -68,23 +86,6 @@ var LineCtrl = {
             }
         }
         return ready;
-    },
-
-    movePoint : function(event) {
-        var mouseDownCoordinates = PaintPanel.getUsrCoordinatesOfMouse(this.mouseDownEvent);
-        var mouseUpCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
-        if (mouseDownCoordinates[0] != mouseUpCoordinates[0] && mouseDownCoordinates[1] != mouseUpCoordinates[1]){
-            var currentElementWithCoordinates = PaintPanel.board.getAllUnderMouse(this.mouseUpEvent);
-            var currentElement = currentElementWithCoordinates[0];
-            if (currentElement instanceof JXG.Line){
-                var moveLineCommand = new MoveLineCommand(event);
-                app.executeCommand(moveLineCommand);
-            }
-            else if (currentElement instanceof JXG.Point){
-                var movePointCommand = new MovePointCommand(event);
-                app.executeCommand(movePointCommand);
-            }
-        }
     }
 
-};
+}

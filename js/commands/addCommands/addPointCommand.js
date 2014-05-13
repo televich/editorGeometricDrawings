@@ -11,6 +11,6 @@ AddPointCommand.prototype.execute = function() {
 };
 
 AddPointCommand.prototype.unExecute = function() {
-    PaintPanel.removePoint(this.point);
+    PaintPanel.delOfPoint(this.point);
     this.point.setExist(false);
 };

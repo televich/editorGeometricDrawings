@@ -5,6 +5,7 @@ function AddPolygonCommand(points) {
 
     this.points = points.slice();
     this.abstractPolygon = null;
+    this.perimeter = (this.points.length-1)*10;
 }
 
 AddPolygonCommand.prototype.execute = function () {
@@ -13,7 +14,5 @@ AddPolygonCommand.prototype.execute = function () {
 };
 
 AddPolygonCommand.prototype.unExecute = function () {
-    PaintPanel.removePolygon(this.abstractPolygon);
-    PolygonCtrl.clearPoints();
-    PolygonCtrl.points = this.points.slice();
+    PaintPanel.removeOfPolygon(this.abstractPolygon);
 };

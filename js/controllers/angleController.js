@@ -8,38 +8,48 @@ var AngleCtrl = {
 
     addPoint: function (event) {
 
-        this.mouseDownEvent = event;
-
         var point = null;
         var contains = PaintPanel.containsPoint(event);
         var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
 
-        if (this.validateStartPoint() && !contains) {
-            this.createMacroCommand(pointCoordinates);
-        } else {
-            if (!contains) {
-                point = new AbstractPoint(pointCoordinates);
-                var addPointCommand = new AddPointCommand(point);
-                app.executeCommand(addPointCommand);
-            } else {
-                point = PaintPanel.getExistingPoint(event);
+        if(!contains)
+        {
+            PointCtrl.addPoint(event);
+
+            PaintPanel.points[PaintPanel.points.length-1].free = false;
+            PaintPanel.points[PaintPanel.points.length-1].numberOfFigures ++ ;
+
+            this.points.push(PaintPanel.points[PaintPanel.points.length-1]);
+
+        }
+        else
+        {
+            var pointsN = PaintPanel.board.getAllObjectsUnderMouse(event);
+            var pointN = pointsN[0];
+            for(var i = 0; i < PaintPanel.points.length; i++) {
+                if(pointN.name == PaintPanel.points[i].name)
+                {
+                    PaintPanel.points[i].free = false;
+                    PaintPanel.points[i].numberOfFigures ++ ;
+                    this.points.push(PaintPanel.points[i]);
+                    break;
+                }
             }
-            if (point != null) {
-                this.points.push(point);
-            }
+
         }
 
-        if (this.getExistingPoints().length == 3) {
-            var existingPoints = this.getExistingPoints();
-            var length = existingPoints.length;
-            var macroCommand = new MacroCommand();
-            var addSegmentCommand1 = new AddSegmentCommand(existingPoints[length - 3], existingPoints[length - 2]);
-            var addSegmentCommand2 = new AddSegmentCommand(existingPoints[length - 2], existingPoints[length - 1]);
-            var addAngleCommand = new AddAngleCommand(existingPoints[length - 3], existingPoints[length - 2], existingPoints[length - 1]);
-            macroCommand.addCommands(addSegmentCommand1, addSegmentCommand2, addAngleCommand);
-            app.executeCommand(macroCommand);
-            this.clearPoints();
+        if (this.points.length == 3) {
+            var addAngleCommand = new AddAngleCommand(this.points[0], this.points[1],this.points[2],30);
+
+            this.points.length=0;
+
+            app.executeCommand(addAngleCommand);
+
+            ;
+            //this.clearPoints();
+
         }
+
     },
 
     createMacroCommand : function(pointCoordinates) {
@@ -56,6 +66,36 @@ var AngleCtrl = {
         app.executeCommand(macroCommand);
         this.clearPoints();
     },
+    changeFigure : function(line){
+        app.changeElement = line ;
+        var field = document.getElementById("parameters");
+        field.style.display = 'block';
+        document.getElementById("p").focus();
+
+
+    },
+    saveChangeofFigure : function(element,param)
+    {
+
+        var saveChangeofFigureCommand = new ChangeAngleCommand(element,param);
+
+        app.executeCommand(saveChangeofFigureCommand);
+
+
+    },
+    delOfAngle : function(angle){
+
+        var delAngleCommand = new DelAngleCommand(angle);
+        app.executeCommand(delAngleCommand);
+
+    },
+    changeFigure : function(line){
+        var field = document.getElementById("parameters");
+        field.style.display = 'block';
+        document.getElementById("p").focus();
+        app.changeElement = line ;
+
+    },
 
     clearPoints: function () {
 
@@ -68,7 +108,7 @@ var AngleCtrl = {
 
     validateStartPoint: function () {
 
-        var ready = false, length = this.points.length, number = 0;
+        var ready = false, length = this.points.length, number = 0
         for(var  i = 0; i < length; i++) {
             if(this.points[i].isExist()) {
                 number++;
@@ -88,23 +128,6 @@ var AngleCtrl = {
             }
         }
         return existPoints;
-    },
-
-    movePoint : function(event) {
-        var mouseDownCoordinates = PaintPanel.getUsrCoordinatesOfMouse(this.mouseDownEvent);
-        var mouseUpCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
-        if (mouseDownCoordinates[0] != mouseUpCoordinates[0] && mouseDownCoordinates[1] != mouseUpCoordinates[1]){
-            var currentElementWithCoordinates = PaintPanel.board.getAllUnderMouse(this.mouseUpEvent);
-            var currentElement = currentElementWithCoordinates[0];
-            if (currentElement instanceof JXG.Line){
-                var moveAngleCommand = new MoveAngleCommand(event);
-                app.executeCommand(moveAngleCommand);
-            }
-            else if (currentElement instanceof JXG.Point){
-                var movePointCommand = new MovePointCommand(event);
-                app.executeCommand(movePointCommand);
-            }
-        }
     }
 
-};
+}

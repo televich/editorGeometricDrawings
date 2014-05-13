@@ -4,29 +4,72 @@
 var PointCtrl = {
 
     addPoint : function(event) {
-        this.mouseDownEvent = event;
+
         var contains = PaintPanel.containsPoint(event);
 
+        //Создается точка
         if(!contains) {
 
             var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
-            var point = new AbstractPoint(pointCoordinates);
+
+            var point = new AbstractPoint("",pointCoordinates[0],pointCoordinates[1]);
+
+            // переменная свободная
+            point.free=true;
+
+            point.coordinates.push(pointCoordinates);
+
+
             var addPointCommand = new AddPointCommand(point);
             app.executeCommand(addPointCommand);
 
-        }
-    },
 
+
+        }
+
+
+    },
+    addPointWithoutHistory : function(event) {
+
+        var contains = PaintPanel.containsPoint(event);
+
+        //Создается точка
+        if(!contains) {
+
+            var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
+
+            var point = new AbstractPoint("",pointCoordinates[0],pointCoordinates[1]);
+
+            // переменная свободная
+            point.free=true;
+
+            point.coordinates.push(pointCoordinates);
+
+            PaintPanel.createPoint(point);
+
+
+
+
+        }
+
+
+    },
+    //функция меняет значение координат точки
+    changeTheCoordinatesOfPoint : function(point){
+
+
+        PaintPanel.changePoint(point);
+
+    },
+    delOfPoint : function(point){
+
+        var delPointCommand = new DelPointCommand(point);
+        app.executeCommand(delPointCommand);
+
+    },
     clearPoints : function() {
 
-    },
-
-    movePoint : function(event) {
-        var mouseDownCoordinates = PaintPanel.getUsrCoordinatesOfMouse(this.mouseDownEvent);
-        var mouseUpCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
-        if (mouseDownCoordinates[0] != mouseUpCoordinates[0] && mouseDownCoordinates[1] != mouseUpCoordinates[1]){
-            var movePointCommand = new MovePointCommand(event);
-            app.executeCommand(movePointCommand);
-        }
     }
+
+
 }

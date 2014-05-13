@@ -8,40 +8,73 @@ var SegmentCtrl = {
 
     addPoint: function (event) {
 
-        this.mouseDownEvent = event;
-
         var point = null;
         var contains = PaintPanel.containsPoint(event);
         var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
 
-        if (this.validateStartPoint() && !contains) {
-            point = new AbstractPoint(pointCoordinates);
-            var macroCommand = new MacroCommand();
-            var addPointCommand = new AddPointCommand(point);
-            var addSegmentCommand = new AddSegmentCommand(this.points[this.points.length - 1], point);
-            macroCommand.addCommands(addPointCommand, addSegmentCommand);
-            app.executeCommand(macroCommand);
-            this.clearPoints();
-        } else {
-            if (!contains) {
-                point = new AbstractPoint(pointCoordinates);
-                var addPointCommand = new AddPointCommand(point);
-                app.executeCommand(addPointCommand);
-            } else {
-                point = PaintPanel.getExistingPoint(event);
+        if(!contains)
+        {
+            PointCtrl.addPoint(event);
+            PaintPanel.points[PaintPanel.points.length-1].free = false;
+            PaintPanel.points[PaintPanel.points.length-1].numberOfFigures ++ ;
+            this.points.push(PaintPanel.points[PaintPanel.points.length-1]);
+
+        }
+        else
+        {
+            var pointsN = PaintPanel.board.getAllObjectsUnderMouse(event);
+            var pointN = pointsN[0];
+            for(var i = 0; i < PaintPanel.points.length; i++) {
+                if(pointN.name == PaintPanel.points[i].name)
+                {
+                    PaintPanel.points[i].free = false;
+                    PaintPanel.points[i].numberOfFigures ++ ;
+                    this.points.push(PaintPanel.points[i]);
+                    break;
+                }
             }
-            if (point != null) {
-                this.points.push(point);
-            }
+
         }
 
         if (this.points.length == 2) {
-            var addSegmentCommand = new AddSegmentCommand(this.points[0], this.points[1]);
-            app.executeCommand(addSegmentCommand);
-            this.clearPoints();
-        }
-    },
+            var addSegmentCommand = new AddSegmentCommand(this.points[0], this.points[1],10);
 
+            this.points.length=0;
+
+            app.executeCommand(addSegmentCommand);
+
+
+            ;
+            //this.clearPoints();
+
+        }
+
+    },
+    //Создаем команду delSegmentCommand для удаления отрезка
+    //чтоб ее можно было потом отменить и выполняем ее
+    delOfSegment : function(segment) {
+
+        var delSegmentCommand = new DelSegmentCommand(segment);
+        app.executeCommand(delSegmentCommand);
+
+    },
+    changeFigure : function(line){
+        app.changeElement = line ;
+        var field = document.getElementById("parameters");
+        field.style.display = 'block';
+        document.getElementById("p").focus();
+
+
+    },
+    saveChangeofFigure : function(element,param)
+    {
+
+        var saveChangeofFigureCommand = new ChangeSegmentCommand(element,param);
+
+        app.executeCommand(saveChangeofFigureCommand);
+
+
+    },
     clearPoints: function () {
 
         this.points.length = 0;
@@ -68,23 +101,6 @@ var SegmentCtrl = {
             }
         }
         return ready;
-    },
-
-    movePoint : function(event) {
-        var mouseDownCoordinates = PaintPanel.getUsrCoordinatesOfMouse(this.mouseDownEvent);
-        var mouseUpCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
-        if (mouseDownCoordinates[0] != mouseUpCoordinates[0] && mouseDownCoordinates[1] != mouseUpCoordinates[1]){
-            var currentElementWithCoordinates = PaintPanel.board.getAllUnderMouse(this.mouseUpEvent);
-            var currentElement = currentElementWithCoordinates[0];
-            if (currentElement instanceof JXG.Line){
-                var moveSegmentCommand = new MoveSegmentCommand(event);
-                app.executeCommand(moveSegmentCommand);
-            }
-            else if (currentElement instanceof JXG.Point){
-                var movePointCommand = new MovePointCommand(event);
-                app.executeCommand(movePointCommand);
-            }
-        }
     }
 
-};
+}

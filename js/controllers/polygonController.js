@@ -7,42 +7,90 @@ var PolygonCtrl = {
     points : [],
     sideOfThePolygon : [],
     sides : [],
+    startpoint : null,
+    nowpoint : null,
 
     addPoint: function (event) {
 
-        this.mouseDownEvent = event;
 
-        var point = null;
         var contains = PaintPanel.containsPoint(event);
         var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
-        this.points = this.points.filter(function(point) {return point.isExist()});
 
-        if(!contains) {
-            point = new AbstractPoint(pointCoordinates);
-            var addPointCommand = new AddPointCommand(point);
-            if(this.points.length > 0) {
-                var macroCommand = new MacroCommand();
-                var addSegmentCommand = new AddSegmentCommand(this.points[this.points.length - 1], point);
-                this.sides.push(addSegmentCommand);
-                macroCommand.addCommands(addPointCommand,addSegmentCommand);
-                app.executeCommand(macroCommand);
-            } else {
-                app.executeCommand(addPointCommand);
-            }
-            this.addPolygonPoint(point);
-        } else {
-            point = PaintPanel.getExistingPoint(event);
-            if(this.isReady(point)) {
-                var macroCommand = new MacroCommand();
-                var unExecuteMacroCommand = new UnExecuteMacroCommand();
-                var addPolygonCommand = new AddPolygonCommand(this.points);
-                unExecuteMacroCommand.addCommands(this.sides);
-                macroCommand.addCommands(unExecuteMacroCommand, addPolygonCommand);
-                app.executeCommand(macroCommand);
-            } else {
-                this.addPolygonPoint(point);
-            }
+        if(!contains)
+        {
+            PointCtrl.addPoint(event);
+
+            PaintPanel.points[PaintPanel.points.length-1].free = false;
+            PaintPanel.points[PaintPanel.points.length-1].numberOfFigures ++ ;
+
+            this.points.push(PaintPanel.points[PaintPanel.points.length-1]);
+            this.nowpoint = PaintPanel.points[PaintPanel.points.length-1];
+            if(this.points.length == 1)
+                this.startpoint = PaintPanel.points[PaintPanel.points.length-1];
+
         }
+        else
+        {
+            var pointsN = PaintPanel.board.getAllObjectsUnderMouse(event);
+            var pointN = pointsN[0];
+            for(var i = 0; i < PaintPanel.points.length; i++) {
+                if(pointN.name == PaintPanel.points[i].name)
+                {
+                    PaintPanel.points[i].free = false;
+                    PaintPanel.points[i].numberOfFigures ++ ;
+                    this.points.push(PaintPanel.points[i]);
+                    this.nowpoint = PaintPanel.points[i];
+                    if(this.points.length == 1)
+                        this.startpoint = PaintPanel.points[i];
+                    break;
+                }
+            }
+
+        }
+        if(this.points.length > 1)
+        {
+            PaintPanel.board.create('line', [this.points[this.points.length-2].name, this.points[this.points.length-1].name],{straightFirst:false, straightLast:false});
+        }
+
+        if (this.points.length > 2) {
+
+            if(this.startpoint.name == this.nowpoint.name){
+
+                var addPolygonCommand = new AddPolygonCommand(this.points);
+
+                this.points.length=0;
+
+                app.executeCommand(addPolygonCommand);
+
+            }
+
+            ;
+            //this.clearPoints();
+
+        }
+
+    },
+    saveChangeofFigure : function(element,param)
+    {
+
+        var saveChangeofFigureCommand = new ChangePolygonCommand(element,param);
+        app.executeCommand(saveChangeofFigureCommand);
+
+
+    },
+    delOfPolygon : function(polygon,polygonName){
+
+        var delPolygonCommand = new DelPolygonCommand(polygon,polygonName);
+        app.executeCommand(delPolygonCommand);
+
+    },
+    changeFigure : function(line){
+        app.changeElement = line ;
+        var field = document.getElementById("parameters");
+        field.style.display = 'block';
+        document.getElementById("p").focus();
+
+
     },
 
     addPolygonPoint: function (point) {
@@ -96,23 +144,5 @@ var PolygonCtrl = {
             ready = true;
         }
         return ready;
-    },
-
-    movePoint : function(event) {
-        var mouseDownCoordinates = PaintPanel.getUsrCoordinatesOfMouse(this.mouseDownEvent);
-        var mouseUpCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
-        if (mouseDownCoordinates[0] != mouseUpCoordinates[0] && mouseDownCoordinates[1] != mouseUpCoordinates[1]){
-            var currentElementWithCoordinates = PaintPanel.board.getAllUnderMouse(this.mouseUpEvent);
-            var currentElement = currentElementWithCoordinates[0];
-            if (currentElement instanceof JXG.Line){
-                var movePolygonCommand = new MovePolygonCommand(event);
-                app.executeCommand(movePolygonCommand);
-            }
-            else if (currentElement instanceof JXG.Point){
-                var movePointCommand = new MovePointCommand(event);
-                app.executeCommand(movePointCommand);
-            }
-        }
     }
-
-};
+}

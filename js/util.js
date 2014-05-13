@@ -2,29 +2,30 @@
  * Created by Администратор on 09.12.13.
  * test
  */
-function Point(x, y){
+function AbstractStraight(startPoint,endPoint) {
 
-    this.x = x;
-    this.y = y;
+    //Опорные точки прямой
+    this.point1 = startPoint;
+    this.point2 = endPoint;
+    this.length = null;
+
 }
-Point.prototype.getX = function() {
-    return this.x;
-};
 
-Point.prototype.getY = function() {
 
-    return this.y;
-};
 
-/*Point.prototype.setCoordinates = function(coordinates) {
-    this.x = coordinates[0];
-    this.y = coordinates[1];
-}*/
 
-function AbstractLine(line, startLength) {
+function AbstractLine(startPoint,endPoint, startLength) {
 
-    this.line = line;
+    //Граничные точки отрезка
+    this.point1 = startPoint;
+    this.point2 = endPoint;
+
     this.length = startLength;
+
+    this.index = 0;
+    // Здесь хранятся все длины отрезка
+    this.lengthes = [];
+    this.lengthes.push(startLength);
 }
 
 AbstractLine.prototype.getParam = function() {
@@ -37,8 +38,15 @@ AbstractLine.prototype.getInfo = function() {
     var lineName = this.line.point1.name + this.line.point2.name;
     return "Длина отрезка " + lineName + " = " + this.length;
 };
-AbstractLine.prototype.setParam = function(param) {
+AbstractLine.prototype.saveParam = function(param) {
     this.length = param;
+    this.index++;
+
+    this.lengthes[this.index]=param;
+
+};
+AbstractLine.prototype.unsaveParam = function() {
+    this.index--;
 };
 AbstractLine.prototype.getPoint1 = function() {
     return this.line.point1;
@@ -50,60 +58,33 @@ AbstractLine.prototype.getName = function() {
     return this.length.point1.name + this.length.point2.name;
 };
 
-function AbstractSemiCircle(semicircle, radius) {
 
-    this.semicircle = semicircle;
+function AbstractCircle(startPoint,endPoint, radius) {
+
+    // Центр окружности
+    this.point1 = startPoint;
+    // Опорная точка на окружности
+    this.point2 = endPoint;
+
+    // Массив точек на окружности
+    this.points = null;
+
     this.radius = radius;
+
+    this.index = 0;
+    // Здесь хранятся все радиусы
+    this.radiuses = [];
+    this.radiuses.push(radius);
 }
-AbstractSemiCircle.prototype.getParam = function() {
-    return this.radius;
-};
-AbstractSemiCircle.prototype.getObject = function() {
-    return this.semicircle;
-};
-AbstractSemiCircle.prototype.getInfo = function() {
-    return "Радиус полуокружности = " + this.radius;
-};
-AbstractSemiCircle.prototype.setParam = function(param) {
+AbstractCircle.prototype.saveParam = function(param) {
     this.radius = param;
-};
-AbstractSemiCircle.prototype.getPoint1 = function() {
-    return this.semicircle.center;
-};
-AbstractSemiCircle.prototype.getPoint2 = function() {
-    return this.semicircle.point2;
-};
+    this.index++;
+    this.radiuses[this.index]=param;
 
-function AbstractSector(sector, value) {
-
-    this.sector = sector;
-    this.value = value;
-
-}
-AbstractSector.prototype.getParam = function() {
-    return this.value;
 };
-AbstractSector.prototype.getObject = function() {
-    return this.sector;
+AbstractCircle.prototype.unsaveParam = function() {
+    this.index--;
 };
-AbstractSector.prototype.getInfo = function() {
-    return "Значение сектора = " + this.value;
-};
-AbstractSector.prototype.setParam = function(param) {
-    this.value = param;
-};
-AbstractSector.prototype.getPoint1 = function() {
-    return null;
-};
-AbstractSector.prototype.getPoint2 = function() {
-    return null;
-};
-
-function AbstractCircle(circle, radius) {
-
-    this.circle = circle;
-    this.radius = radius;
-}
 AbstractCircle.prototype.getParam = function() {
     return this.radius;
 };
@@ -116,18 +97,27 @@ AbstractCircle.prototype.getInfo = function() {
 AbstractCircle.prototype.setParam = function(param) {
     this.radius = param;
 };
-AbstractCircle.prototype.getPoint1 = function() {
-    return this.circle.center;
-};
+//AbstractCircle.prototype.getPoint1 = function() {
+//    return this.circle.center;
+//};
 AbstractCircle.prototype.getPoint2 = function() {
     return this.circle.point2;
 };
 
 
-function AbstractAngle(angle, value) {
+function AbstractAngle(varpointA,varpointB,varpointC, value) {
 
-    this.angle = angle;
+    this.name = "";
+    this.point1 = varpointA;
+
+    // Центральная точка угла
+    this.point2 = varpointB;
+
+    this.point3 = varpointC;
     this.value = value;
+    this.index = 0;
+    this.values = [];
+    this.values.push(value);
 
 }
 AbstractAngle.prototype.getParam = function() {
@@ -139,8 +129,14 @@ AbstractAngle.prototype.getObject = function() {
 AbstractAngle.prototype.getInfo = function() {
     return "Значение угла = " + this.value;
 };
-AbstractAngle.prototype.setParam = function(param) {
+AbstractAngle.prototype.saveParam = function(param) {
     this.value = param;
+    this.index++;
+    this.values[this.index]=(param);
+
+};
+AbstractAngle.prototype.unsaveParam = function() {
+    this.index--;
 };
 AbstractAngle.prototype.getPoint1 = function() {
     return null;
@@ -149,11 +145,66 @@ AbstractAngle.prototype.getPoint2 = function() {
     return null;
 };
 
+function AbstractTriangle(pointsABC,perimeterABC) {
 
-function AbstractPolygon(polygon, sideOfTheAbstractPolygon) {
+    //Стороны треугольника
+    this.line1 = new AbstractLine(pointsABC[0],pointsABC[1],perimeterABC/3);
+    // this.board.create('line', [pointsABC[0].name, pointsABC[1].name],{straightFirst:false, straightLast:false});
 
-    this.polygon = polygon;
-    this.sideOfTheAbstractPolygon = sideOfTheAbstractPolygon;
+    this.line2 = new AbstractLine(pointsABC[1],pointsABC[2],perimeterABC/3);
+    // this.board.create('line', [pointsABC[1].name, pointsABC[2].name],{straightFirst:false, straightLast:false});
+
+    this.line3 = new AbstractLine(pointsABC[2],pointsABC[0],perimeterABC/3);
+    // this.board.create('line', [pointsABC[2].name, pointsABC[0].name],{straightFirst:false, straightLast:false});
+
+
+
+    this.index = 0;
+
+    //Периметр треугольника
+    this.perimeter = perimeterABC;
+    this.perimeters = [];
+    this.perimeters[this.index] = perimeterABC;
+
+    //!?Возможно еще добавить внутренние углы
+    //!?Возможно еще добавить внутренние и внеш окружности
+
+};
+
+AbstractTriangle.prototype.saveParam = function(param) {
+    this.line1.length = param/3;
+    this.line2.length = param/3;
+    this.line3.length = param/3;
+    this.perimeter = param;
+    this.index++;
+    this.perimeters[this.index]=param;
+
+};
+AbstractTriangle.prototype.unsaveParam = function() {
+    this.index--;
+    this.line1.length = this.perimeters[this.index]/3;
+    this.line2.length = this.perimeters[this.index]/3;
+    this.line3.length = this.perimeters[this.index]/3;
+};
+function AbstractPolygon(polygon,varperimeter) {
+
+    // Стороны полигона
+
+    this.lines = [];
+    for(var  i = 0; i < polygon.length-1; i++) {
+        this.lines.push(new  AbstractLine(polygon[i],polygon[i+1],varperimeter/polygon.length));
+    }
+    this.lines.push(new  AbstractLine(polygon[polygon.length-1],polygon[0],varperimeter/polygon.length));
+    // периметр
+    this.perimeter = varperimeter;
+
+    this.index = 0;
+    this.perimeters = [];
+    this.perimeters[this.index]=varperimeter;
+
+    //!?Возможно еще добавить внутренние углы
+
+    // this.sideOfTheAbstractPolygon = sideOfTheAbstractPolygon;
 }
 AbstractPolygon.prototype.containsSide = function(side) {
     var contains = false;
@@ -200,32 +251,58 @@ AbstractPolygon.prototype.getPolygonName = function() {
     name.replace(" ", "");
     return name;
 };
+AbstractPolygon.prototype.saveParam = function(param) {
+
+    for(var i = 0; i < this.lines.length; i++)
+    {
+        this.lines[i].length = param/this.lines.length;
+    }
+    this.perimeter = param;
+    this.index++;
+    this.perimeters[this.index]=(param);
+
+};
+AbstractPolygon.prototype.unsaveParam = function() {
+    this.index--;
+    for(var i = 0; i < this.lines.length; i++)
+    {
+        this.lines[i].length = this.perimeters[this.index]/this.lines.length;
+    }
+};
+function AbstractPoint(name,varX,varY) {
+
+    //Название точки
+    this.name = name;
+
+    //Координаты точки по Х и Y на board
+    this.X = varX;
+    this.Y = varY;
+
+    //Здесь хранятся все координаты точки, которые когда либо были у нее в виде(x;y)
+    this.coordinates = [];
 
 
-function AbstractPoint(pointCoordinates) {
+    //булевая переменная, которая показывает точка свободна или привязана к какой нить фигуре
+    this.free =true;
 
-    //this.point = point;
-    this.pointCoordinates = pointCoordinates;
+    //Число фигур к которой привязана точка
+    this.numberOfFigures = 0;
+    //!! Если точка привязана а число фигур равно 0, то в скорем времени она удалиться(как в Java когда на объект нет ссылок)
+
     this.exist = true;
     this.containsOnBoard = false;
 }
-AbstractPoint.prototype.getCoordinates = function(){
-    return this.pointCoordinates;
-};
 AbstractPoint.prototype.getX = function() {
-    return this.pointCoordinates[0];
+    return this.X;
 };
 AbstractPoint.prototype.getY = function() {
-    return this.pointCoordinates[1];
+    return this.Y;
 };
 AbstractPoint.prototype.setExist = function(exist) {
     this.exist = exist;
 };
 AbstractPoint.prototype.isExist = function() {
     return this.exist;
-};
-AbstractPoint.prototype.setCoordinates = function(pointCoordinates) {
-    this.pointCoordinates = pointCoordinates;
 };
 AbstractPoint.prototype.setContainsOnBoard = function(containsOnBoard) {
     this.containsOnBoard = containsOnBoard;

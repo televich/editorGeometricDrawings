@@ -7,36 +7,64 @@ var TriangleCtrl = {
 
     addPoint: function (event) {
 
-        this.mouseDownEvent = event;
-
         var point = null;
         var contains = PaintPanel.containsPoint(event);
         var pointCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
 
-        if (this.validateStartPoint() && !contains) {
-            this.createMacroCommand(pointCoordinates);
-        } else {
-            if (!contains) {
-                point = new AbstractPoint(pointCoordinates);
-                var addPointCommand = new AddPointCommand(point);
-                app.executeCommand(addPointCommand);
-            } else {
-                point = PaintPanel.getExistingPoint(event);
+        if(!contains)
+        {
+            PointCtrl.addPoint(event);
+
+            PaintPanel.points[PaintPanel.points.length-1].free = false;
+            PaintPanel.points[PaintPanel.points.length-1].numberOfFigures ++ ;
+
+            this.points.push(PaintPanel.points[PaintPanel.points.length-1]);
+
+        }
+        else
+        {
+            var pointsN = PaintPanel.board.getAllObjectsUnderMouse(event);
+            var pointN = pointsN[0];
+            for(var i = 0; i < PaintPanel.points.length; i++) {
+                if(pointN.name == PaintPanel.points[i].name)
+                {
+                    PaintPanel.points[i].free = false;
+                    PaintPanel.points[i].numberOfFigures ++ ;
+                    this.points.push(PaintPanel.points[i]);
+                    break;
+                }
             }
-            if (point != null) {
-                this.points.push(point);
-            }
+
         }
 
-        if (this.getExistingPoints().length == 3) {
-            var existingPoints = this.getExistingPoints();
-            var length = existingPoints.length;
-            var addTriangleCommand = new AddTriangleCommand(existingPoints[length - 3], existingPoints[length - 2], existingPoints[length - 1]);
+        if (this.points.length == 3) {
+            var addTriangleCommand = new AddTriangleCommand(this.points[0], this.points[1],this.points[2],30);
+
+            this.points.length=0;
+
             app.executeCommand(addTriangleCommand);
-            this.clearPoints();
-        }
-    },
 
+            ;
+            //this.clearPoints();
+
+        }
+
+    },
+    saveChangeofFigure : function(element,param)
+    {
+
+        var saveChangeofFigureCommand = new ChangeTriangleCommand(element,param);
+
+        app.executeCommand(saveChangeofFigureCommand);
+
+
+    },
+    delOfTriangle : function(triangle){
+
+        var delTriangleCommand = new DelTriangleCommand(triangle);
+        app.executeCommand(delTriangleCommand);
+
+    },
     createMacroCommand : function(pointCoordinates) {
 
         var existingPoints = this.getExistingPoints();
@@ -53,6 +81,14 @@ var TriangleCtrl = {
     clearPoints: function () {
 
         this.points.length = 0;
+    },
+    changeFigure : function(line){
+        app.changeElement = line ;
+        var field = document.getElementById("parameters");
+        field.style.display = 'block';
+        document.getElementById("p").focus();
+
+
     },
 
     addTrianglePoint: function (point) {
@@ -81,23 +117,6 @@ var TriangleCtrl = {
             }
         }
         return existPoints;
-    },
-
-    movePoint : function(event) {
-        var mouseDownCoordinates = PaintPanel.getUsrCoordinatesOfMouse(this.mouseDownEvent);
-        var mouseUpCoordinates = PaintPanel.getUsrCoordinatesOfMouse(event);
-        if (mouseDownCoordinates[0] != mouseUpCoordinates[0] && mouseDownCoordinates[1] != mouseUpCoordinates[1]){
-            var currentElementWithCoordinates = PaintPanel.board.getAllUnderMouse(this.mouseUpEvent);
-            var currentElement = currentElementWithCoordinates[0];
-            if (currentElement instanceof JXG.Line){
-                var moveTriangleCommand = new MoveTriangleCommand(event);
-                app.executeCommand(moveTriangleCommand);
-            }
-            else if (currentElement instanceof JXG.Point){
-                var movePointCommand = new MovePointCommand(event);
-                app.executeCommand(movePointCommand);
-            }
-        }
     }
 
-};
+}
