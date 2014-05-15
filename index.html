@@ -67,6 +67,7 @@
                     <div id="header">
                         <h1>ONLINE GEOMETRY</h1>
                         <hr>
+                        <a href="#" onclick="window.open('help.html','test', 'width=450,height=450,status=no,resizable=no,top=200,left=100'); return false;">Справка</a>
                     </div>
                     <p style="font-size: 10pt"> Информация о графическом объекте </p>
                     <p style="font-size: 10pt" id ="polygonInfo"> </p>
@@ -112,6 +113,12 @@
                             </span>
                             <span class="button" id="web-button" onclick="PaintPanel.grid()">
                                 <img src="images/web.gif">
+                            </span>
+                        <span class="button" id="undo-button" onclick="app.undo()">
+                                <img src="images/undo.png">
+                            </span>
+                            <span class="button" id="redo-button" onclick="app.redo()">
+                                <img src="images/redo.png">
                             </span>
                     </div>
                 </td>
